@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using WebAPICRUD.Models.Responses;
+using WebAPICRUD.Responses;
 using WebAPICRUD.Roles;
 
 namespace WebAPICRUD.Controllers
@@ -16,9 +17,14 @@ namespace WebAPICRUD.Controllers
         }
 
         [HttpGet]
-        public async Task<List<RoleSingleResponse>> get()
+        public async Task<BaseResponse<List<RoleSingleResponse>>> get()
         {
-            return await _rolesService.GetRoles();
+            var roles = await _rolesService.GetRoles();
+            return new BaseResponse<List<RoleSingleResponse>>
+            {
+                Message = "Got Roles successfuly",
+                Data = roles
+            };
         }
     }
 }
