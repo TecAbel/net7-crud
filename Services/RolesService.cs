@@ -9,6 +9,7 @@ namespace WebAPICRUD.Roles;
 public interface IRolesService
 {
     Task<List<RoleSingleResponse>> GetRoles();
+    Task<RoleSingleResponse> GetRoleById(int id);
 }
 
 public class RolesService : IRolesService
@@ -19,6 +20,15 @@ public class RolesService : IRolesService
     public RolesService(IOptions<AppSettings> AppSettings)
     {
         _appSettings = AppSettings.Value;
+    }
+
+    public async Task<RoleSingleResponse> GetRoleById(int id)
+    {
+        var db = new DBContext(_appSettings);
+        var role = await db
+          .Roles
+          .FindAsync(id);
+        return new RoleSingleResponse(role);
     }
 
     public async Task<List<RoleSingleResponse>> GetRoles()

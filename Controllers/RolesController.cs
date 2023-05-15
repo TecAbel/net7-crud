@@ -26,5 +26,16 @@ namespace WebAPICRUD.Controllers
                 Data = roles
             };
         }
+
+        [HttpGet("{id}")]
+        public async Task<BaseResponse<RoleSingleResponse>> getById(int id)
+        {
+            var role = await _rolesService.GetRoleById(id);
+            return new BaseResponse<RoleSingleResponse>
+            {
+                Message = "Got role successfuly",
+                Data = role
+            };
+        }
     }
 }
